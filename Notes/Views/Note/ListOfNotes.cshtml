@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Notes.Models.Note> 
+
+<h3>Список заметок</h3>
+<a asp-action="Index" asp-controller="Home" class="btn btn-info">Назад</a>
+<br />
+<table class="table">
+    <tr><td>Заголовок</td><td>Содержание</td></tr>
+    @foreach (var item in Model)
+    {
+        <tr><td>@item.Header</td><td>@item.Content</td>
+    <td>
+        <a asp-action="Edit" asp-controller="Note"asp-route-id="@item.Id" class="btn btn-danger">Редактировать</a>
+        <a asp-action="Delete" asp-controller="Note"asp-route-id="@item.Id"class="btn btn-warning">Удалить</a>
+    </td>
+    </tr>
+    }
+</table>
