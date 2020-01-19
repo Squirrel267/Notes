@@ -48,10 +48,18 @@ namespace Notes.Controllers
 
             return View(notes);
         }
-        public IActionResult ListOfNotes()
+        public IActionResult ListOfNotes(string searchString)
         {
             string userId = _userManager.GetUserId(User);
-            List<Note> userNotes = _context.Note.Where(x => x.UserId == Guid.Parse(userId)).ToList();
+            List<Note> userNotes;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                userNotes = _context.Note.Where(x => x.UserId == Guid.Parse(userId) && (x.Content.Contains(searchString) || x.Header.Contains(searchString))).ToList();
+            }
+            else {
+                userNotes = _context.Note.Where(x => x.UserId == Guid.Parse(userId)).ToList();
+
+            }
             return View( userNotes);
         }
         [HttpGet]
